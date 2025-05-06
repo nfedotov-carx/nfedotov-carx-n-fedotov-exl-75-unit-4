@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Golf
 {
-    public class LevelContr : MonoBehaviour
+    public class LevelController : MonoBehaviour
     {
         public SpawnerStone spawner;
         //public float delay = 0.5f;
@@ -16,11 +16,19 @@ namespace Golf
         public float delayStep = 0.1f;
 
         public int score = 0;
+        public int highScore = 0;
 
         private float m_delay = 0.5f;
 
         private List<GameObject> m_stones = new List<GameObject>(16);
 
+        private void OnStickHit()
+        {
+            score++;
+            highScore = Mathf.Max(highScore, score);
+
+            Debug.Log($"score: {score} - hightScore: {highScore}");
+        }
 
         public void Start()
         {
@@ -31,12 +39,14 @@ namespace Golf
 
         private void OnEnable()
         {
-            Stone.onCollisionStone += GameOver;
+            GameEvents.onCollisionStones += GameOver;
+            GameEvents.onStickHit += GameOver;
         }
 
         private void OnDisable()
         {
-            Stone.onCollisionStone -= GameOver;
+            GameEvents.onCollisionStones -= GameOver;
+            GameEvents.onStickHit -= GameOver;
         }
 
         private void GameOver()
