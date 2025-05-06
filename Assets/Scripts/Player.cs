@@ -19,12 +19,17 @@ namespace Golf
         private Vector3 m_lastPosition;
 
         private int score = 0;
-        
+
+        public void SetDown(bool value)
+        {
+            m_isDown = value;
+        }
+
         private void Update()
         {
            m_lastPosition = helper.position;
 
-            m_isDown = Input.GetMouseButton(0);
+            //m_isDown = Input.GetMouseButton(0);
 
             Quaternion rot = stick.localRotation;
 
@@ -46,9 +51,6 @@ namespace Golf
                     stone.isAffect = true;
                     GameEvents.StickHit();
                 }
-
-                // score++;
-                // Debug.Log("Hit stone: " + score);
             }
 
             Debug.Log(collider, this);
