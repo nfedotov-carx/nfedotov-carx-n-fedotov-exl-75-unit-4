@@ -18,10 +18,8 @@ namespace Golf
 
         private Vector3 m_lastPosition;
 
-        public void SetDown(bool value)
-        {
-            m_isDown = value;
-        }
+        private int score = 0;
+        
         private void Update()
         {
            m_lastPosition = helper.position;
@@ -48,6 +46,9 @@ namespace Golf
                     stone.isAffect = true;
                     GameEvents.StickHit();
                 }
+
+                // score++;
+                // Debug.Log("Hit stone: " + score);
             }
 
             Debug.Log(collider, this);

@@ -22,31 +22,27 @@ namespace Golf
 
         private List<GameObject> m_stones = new List<GameObject>(16);
 
+
         private void OnStickHit()
         {
             score++;
             highScore = Mathf.Max(highScore, score);
 
-            Debug.Log($"score: {score} - hightScore: {highScore}");
+            Debug.Log($"score: {score} - highScore: {highScore}");
         }
-
-        public void Start()
-        {
-            m_lastSpawnerTime = Time.time;
-            RefreshDelay();
-        }
-
 
         private void OnEnable()
         {
-            GameEvents.onCollisionStones += GameOver;
-            GameEvents.onStickHit += GameOver;
+            //Stone.onCollisionStone += GameOver;
+            GameEvents.onCollisionStone += GameOver;
+            GameEvents.onStickHit += OnStickHit;
         }
 
         private void OnDisable()
         {
-            GameEvents.onCollisionStones -= GameOver;
-            GameEvents.onStickHit -= GameOver;
+            //Stone.onCollisionStone -= GameOver;
+            GameEvents.onCollisionStone -= GameOver;
+            GameEvents.onStickHit -= OnStickHit;
         }
 
         private void GameOver()
@@ -55,6 +51,17 @@ namespace Golf
             enabled = false;
         }
 
+        public void RefreshDelay()
+        {
+            m_delay = UnityEngine.Random.Range(delayMin, delayMax);
+            delayMax = Mathf.Max(delayMin, delayMax - delayStep);
+        }
+
+        public void Start()
+        {
+            m_lastSpawnerTime = Time.time;
+            RefreshDelay();
+        }
 
         private void Update()
         {
@@ -66,10 +73,6 @@ namespace Golf
                 RefreshDelay();
             }
         }
-        public void RefreshDelay()
-        {
-            m_delay = UnityEngine.Random.Range(delayMin, delayMax);
-            delayMax = Mathf.Max(delayMin, delayMax - delayStep);
-        }
+
     }
 }
