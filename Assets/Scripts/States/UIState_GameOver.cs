@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Golf
 {
-    public class UIState_MainMenu : MonoBehaviour
+    public class UIState_GameOver : GameState
     {
         // Start is called before the first frame update
         void Start()
