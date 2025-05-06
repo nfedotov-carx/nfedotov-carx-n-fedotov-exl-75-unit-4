@@ -5,30 +5,10 @@ using UnityEngine;
 
 namespace Golf
 {
-    public class LevelController : MonoBehaviour
+    public class LevelContr : MonoBehaviour
     {
         public SpawnerStone spawner;
-        public float delay = 0.5f;
-        public bool isGameOver = false;
-
-        private IEnumerator StartStoneProc()
-        {
-            do
-            {
-                yield return new WaitForSeconds(delay);
-                spawner.Spawn();
-            }
-            while (!isGameOver);
-        }
-
-        public void Start()
-        {
-            StartCoroutine(StartStoneProc());
-        }
-
-        /*
-        public SpawnerStone spawner;
-        public float delay = 0.5f;
+        //public float delay = 0.5f;
         private float m_lastSpawnerTime = 0;
 
         public float delayMax = 2f;
@@ -44,7 +24,6 @@ namespace Golf
 
         public void Start()
         {
-            //StartCoroutine(SpawnStone());
             m_lastSpawnerTime = Time.time;
             RefreshDelay();
         }
@@ -57,7 +36,7 @@ namespace Golf
 
         private void OnDisable()
         {
-            Stone.onCollisionStone += GameOver;
+            Stone.onCollisionStone -= GameOver;
         }
 
         private void GameOver()
@@ -82,7 +61,5 @@ namespace Golf
             m_delay = UnityEngine.Random.Range(delayMin, delayMax);
             delayMax = Mathf.Max(delayMin, delayMax - delayStep);
         }
-    */
     }
-
 }
