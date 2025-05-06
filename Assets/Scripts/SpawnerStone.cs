@@ -4,29 +4,26 @@ using UnityEngine;
 
 namespace Golf
 {
-    public class Spawners : MonoBehaviour
+    public class SpawnerStone : MonoBehaviour
     {
         public GameObject[] prefabs;
 
-        public void Spawn()
+        public /* GameObject */ void Spawn()
         {
-            Debug.Log("Try Spawn!");
-
             var prefab = GetRandomPrefab();
+
             if (prefab == null)
             {
-                Debug.LogError("Spawner - prefab == null");
-                return;
+                return /* null */;
             }
 
-            Instantiate(prefab, transform.position, Quaternion.identity);
+            /* return */ Instantiate(prefab, transform.position, Quaternion.identity);
         }
 
         private GameObject GetRandomPrefab()
         {
             if (prefabs.Length == 0)
             {
-                Debug.LogError("Spawner - prefab is empty");
                 return null;
             }
 
