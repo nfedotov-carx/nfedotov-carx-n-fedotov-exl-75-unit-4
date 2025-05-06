@@ -17,7 +17,8 @@ namespace Golf
         public float power = 10f;
 
         private Vector3 m_lastPosition;
-       
+
+        private int score = 0;
         
         private void Update()
         {
@@ -40,10 +41,14 @@ namespace Golf
                 var dir = (helper.position - m_lastPosition).normalized;
                 body.AddForce(dir * power, ForceMode.Impulse);
 
-                if (collider.TryGetComponent(out Stone stone))
+                if (collider.TryGetComponent(out Stone stone) && !stone.isAffect)
                 {
                     stone.isAffect = true;
+                    GameEvents.StickHit();
                 }
+
+                // score++;
+                // Debug.Log("Hit stone: " + score);
             }
 
             Debug.Log(collider, this);

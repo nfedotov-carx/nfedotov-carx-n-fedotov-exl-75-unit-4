@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Golf
 {
-    public class LevelContr : MonoBehaviour
+    public class LevelController : MonoBehaviour
     {
         public SpawnerStone spawner;
         //public float delay = 0.5f;
@@ -16,27 +16,33 @@ namespace Golf
         public float delayStep = 0.1f;
 
         public int score = 0;
+        public int highScore = 0;
 
         private float m_delay = 0.5f;
 
         private List<GameObject> m_stones = new List<GameObject>(16);
 
 
-        public void Start()
+        private void OnStickHit()
         {
-            m_lastSpawnerTime = Time.time;
-            RefreshDelay();
-        }
+            score++;
+            highScore = Mathf.Max(highScore, score);
 
+            Debug.Log($"score: {score} - highScore: {highScore}");
+        }
 
         private void OnEnable()
         {
-            Stone.onCollisionStone += GameOver;
+            //Stone.onCollisionStone += GameOver;
+            GameEvents.onCollisionStone += GameOver;
+            GameEvents.onStickHit += OnStickHit;
         }
 
         private void OnDisable()
         {
-            Stone.onCollisionStone -= GameOver;
+            //Stone.onCollisionStone -= GameOver;
+            GameEvents.onCollisionStone -= GameOver;
+            GameEvents.onStickHit -= OnStickHit;
         }
 
         private void GameOver()
@@ -45,6 +51,17 @@ namespace Golf
             enabled = false;
         }
 
+        public void RefreshDelay()
+        {
+            m_delay = UnityEngine.Random.Range(delayMin, delayMax);
+            delayMax = Mathf.Max(delayMin, delayMax - delayStep);
+        }
+
+        public void Start()
+        {
+            m_lastSpawnerTime = Time.time;
+            RefreshDelay();
+        }
 
         private void Update()
         {
@@ -56,10 +73,6 @@ namespace Golf
                 RefreshDelay();
             }
         }
-        public void RefreshDelay()
-        {
-            m_delay = UnityEngine.Random.Range(delayMin, delayMax);
-            delayMax = Mathf.Max(delayMin, delayMax - delayStep);
-        }
+
     }
 }
