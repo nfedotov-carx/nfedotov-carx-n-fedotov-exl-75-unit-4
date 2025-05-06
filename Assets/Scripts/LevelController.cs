@@ -22,6 +22,14 @@ namespace Golf
 
         private List<GameObject> m_stones = new List<GameObject>(16);
 
+        public void ClearStones()
+        {
+            foreach (var stone in m_stones)
+            {
+                Destroy(stone);
+            }
+            m_stones.Clear();
+        }
 
         private void OnStickHit()
         {
@@ -34,14 +42,15 @@ namespace Golf
         private void OnEnable()
         {
             //Stone.onCollisionStone += GameOver;
-            GameEvents.onCollisionStone += GameOver;
+            //GameEvents.onCollisionStone += GameOver;
             GameEvents.onStickHit += OnStickHit;
+            score = 0;
         }
 
         private void OnDisable()
         {
             //Stone.onCollisionStone -= GameOver;
-            GameEvents.onCollisionStone -= GameOver;
+            //GameEvents.onCollisionStone -= GameOver;
             GameEvents.onStickHit -= OnStickHit;
         }
 
@@ -67,7 +76,8 @@ namespace Golf
         {
             if (Time.time >= m_lastSpawnerTime + m_delay)
             {
-                spawner.Spawn();
+                var stone = spawner.Spawn();
+                m_stones.Add(stone);
                 m_lastSpawnerTime = Time.time;
 
                 RefreshDelay();

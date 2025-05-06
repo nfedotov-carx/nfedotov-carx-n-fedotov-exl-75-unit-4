@@ -8,9 +8,9 @@ namespace Golf
 {
     public class UIState_MainMenu : GameState
     {
-        /*
+        
 
-        public GameState gamePlayState;
+        public GameState gamePlayState;     
         public TMP_Text scoreText;
         public LevelController LevelContr;
 
@@ -19,13 +19,12 @@ namespace Golf
             Exit();
             gamePlayState.Enter();
         }
+        
         protected override void OnEnable()
         {
             base.OnEnable();
 
             scoreText.text = $" HScore : {LevelContr.highScore}";
-        }
-
-        */
+        }        
     }
 }
